@@ -3,10 +3,10 @@
 -----------------------
 
 name = "Health Info"
-description = "Version 0.1\nShows exact health of creatures on mouse-over or controller auto-target. This mod is inspired by Tell Me About Health (DS)."
+description = "Version 0.2\nShows exact health of creatures on mouse-over or controller auto-target. This mod is inspired by Tell Me About Health (DS)."
 author = "xVars"
 
-version = "0.1"
+version = "0.2"
 
 -- Currently no forum thread.
 forumthread = ""

@@ -28,8 +28,8 @@ AddClassPostConstruct("components/health", function(self)
 	local original_SetVal = self.SetVal
 
 	self.SetVal = function(self, val, cause)
-		GetHealth(self.inst)
 		original_SetVal(self, val, cause)
+		GetHealth(self.inst)
 	end
 end)
 
@@ -194,7 +194,7 @@ AddGlobalClassPostConstruct('widgets/controls', 'Controls', function(self)
 				local cmds = {}
 				local textblock = self.playeractionhint.text
 				if self.groundactionhint.shown and 
-				GLOBAL.distsq(GetPlayer():GetPosition(), self.owner.components.playercontroller.controller_target:GetPosition()) < 1.33 then
+				GLOBAL.distsq(GLOBAL.GetPlayer():GetPosition(), self.owner.components.playercontroller.controller_target:GetPosition()) < 1.33 then
 					--You're close to your target so we should combine the two text blocks.
 					cmds = ground_cmds
 					textblock = self.groundactionhint.text
@@ -210,6 +210,7 @@ AddGlobalClassPostConstruct('widgets/controls', 'Controls', function(self)
 				
 				-- table.insert(cmds, target:GetDisplayName())
 				local health = ""
+				local controller_target = self.owner.components.playercontroller.controller_target
 				if controller_target and controller_target.components and controller_target.components.healthinfo and controller_target.components.healthinfo.text ~= '' then
 					health = controller_target.components.healthinfo.text
 				end
@@ -219,7 +220,7 @@ AddGlobalClassPostConstruct('widgets/controls', 'Controls', function(self)
 					table.insert(cmds, TheInput:GetLocalizedControl(controller_id, GLOBAL.CONTROL_CONTROLLER_ATTACK) .. " " .. GLOBAL.STRINGS.UI.HUD.ATTACK)
 					attack_shown = true
 				end
-				if GetPlayer():CanExamine() then
+				if GLOBAL.GetPlayer():CanExamine() then
 					table.insert(cmds,TheInput:GetLocalizedControl(controller_id, GLOBAL.CONTROL_INSPECT) .. " " .. GLOBAL.STRINGS.UI.HUD.INSPECT)
 				end
 				if l then
@@ -239,6 +240,7 @@ AddGlobalClassPostConstruct('widgets/controls', 'Controls', function(self)
 				self.attackhint:Show()
 				self.attackhint:SetTarget(self.owner.components.playercontroller.controller_attack_target)
 				local health = ""
+				local controller_attack_target = self.owner.components.playercontroller.controller_attack_target
 				if controller_attack_target and controller_attack_target.components and controller_attack_target.components.healthinfo and controller_attack_target.components.healthinfo.text ~= '' then
 					health = controller_attack_target:GetDisplayName() .. " " .. controller_attack_target.components.healthinfo.text
 				end
