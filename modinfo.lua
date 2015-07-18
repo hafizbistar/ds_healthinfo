@@ -3,10 +3,10 @@
 -----------------------
 
 name = "Health Info"
-description = "Version 0.2\nShows exact health of creatures on mouse-over or controller auto-target. This mod is inspired by Tell Me About Health (DS)."
+description = "Version 0.3\nShows exact health of creatures on mouse-over or controller auto-target. This mod is inspired by Tell Me About Health (DS)."
 author = "xVars"
 
-version = "0.2"
+version = "0.3"
 
 -- Currently no forum thread.
 forumthread = ""
@@ -40,6 +40,18 @@ configuration_options =
             {description = "Value", data = 0},
             {description = "Percentage", data = 1},
             {description = "Both", data = 2},
+        },
+        default = 0,
+    },
+    {
+        name = "divider",
+        label = "Divider Type",
+        options =
+        {
+            {description = "100/100", data = 0},
+            {description = "-100/100-", data = 1},
+            {description = "(100/100)", data = 2},
+            {description = "{100/100}", data = 3}
         },
         default = 0,
     }

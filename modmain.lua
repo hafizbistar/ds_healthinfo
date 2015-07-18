@@ -1,5 +1,6 @@
 local TheInput = GLOBAL.TheInput
 local show_type = GetModConfigData("show_type")
+local divider = GetModConfigData("divider")
 
 function GetHealth(e)  
 	if e ~= nil and e.components ~= nil and e.components.health and e.components.healthinfo then
@@ -7,14 +8,28 @@ function GetHealth(e)
 		local h=e.components.health
 		local mx=math.floor(h.maxhealth-h.minhealth)
 		local cur=math.floor(h.currenthealth-h.minhealth)
+		local ds = ""
+		local de = ""
+
+		if divider == 1 then
+			ds = "-"
+			de = "-"
+		elseif divider == 2 then
+			ds = "("
+			de = ")"
+		elseif divider == 3 then
+			ds = "{"
+			de = "}"
+		end
+
 
 		if type( mx ) == "number" and type( cur ) == "number" then
 			if show_type == 0 then
-				str = "["..cur.." / "..mx .."]"
+				str = ds..cur.." / "..mx ..de
 			elseif show_type == 1 then
-				str = "["..math.floor(cur*100/mx).."%]"
+				str = ds..math.floor(cur*100/mx).."%"..de
 			else
-				str = "["..cur.." / "..mx .." "..math.floor(cur*100/mx).."%]"
+				str = ds..cur.." / "..mx .." "..math.floor(cur*100/mx).."%"..de
 			end
 		end
 
@@ -164,7 +179,7 @@ AddGlobalClassPostConstruct('widgets/controls', 'Controls', function(self)
 					
 					if self.owner.components.playercontroller.deployplacer.components.placer.can_build then
 						if TheInput:ControllerAttached() then
-							self.groundactionhint.text:SetString(TheInput:GetLocalizedControl(controller_id, GLOBAL.CONTROL_CONTROLLER_ACTION) .. " " .. self.owner.components.playercontroller.deployplacer.components.placer:GetDeployAction():GetActionString().."\n"..TheInput:GetLocalizedControl(controller_id, CONTROL_CONTROLLER_ALTACTION).." "..STRINGS.UI.HUD.CANCEL)
+							self.groundactionhint.text:SetString(TheInput:GetLocalizedControl(controller_id, GLOBAL.CONTROL_CONTROLLER_ACTION) .. " " .. self.owner.components.playercontroller.deployplacer.components.placer:GetDeployAction():GetActionString().."\n"..TheInput:GetLocalizedControl(controller_id, GLOBAL.CONTROL_CONTROLLER_ALTACTION).." "..GLOBAL.STRINGS.UI.HUD.CANCEL)
 						else
 							self.groundactionhint.text:SetString(TheInput:GetLocalizedControl(controller_id, GLOBAL.CONTROL_CONTROLLER_ACTION) .. " " .. self.owner.components.playercontroller.deployplacer.components.placer:GetDeployAction():GetActionString())
 						end
@@ -176,7 +191,7 @@ AddGlobalClassPostConstruct('widgets/controls', 'Controls', function(self)
 				elseif self.owner.components.playercontroller.placer then
 					self.groundactionhint:Show()
 					self.groundactionhint:SetTarget(self.owner)
-					self.groundactionhint.text:SetString(TheInput:GetLocalizedControl(controller_id, GLOBAL.CONTROL_CONTROLLER_ACTION) .. " " .. GLOBAL.STRINGS.UI.HUD.BUILD.."\n" .. TheInput:GetLocalizedControl(controller_id, CONTROL_CONTROLLER_ALTACTION) .. " " .. STRINGS.UI.HUD.CANCEL.."\n")	
+					self.groundactionhint.text:SetString(TheInput:GetLocalizedControl(controller_id, GLOBAL.CONTROL_CONTROLLER_ACTION) .. " " .. GLOBAL.STRINGS.UI.HUD.BUILD.."\n" .. TheInput:GetLocalizedControl(controller_id, GLOBAL.CONTROL_CONTROLLER_ALTACTION) .. " " .. GLOBAL.STRINGS.UI.HUD.CANCEL.."\n")	
 				end
 			elseif ground_r then
 				--local cmds = {}
